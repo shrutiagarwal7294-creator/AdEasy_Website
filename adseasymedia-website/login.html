@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login | AdsEasy Media</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0B63CE">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B63CE'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' fill='white' text-anchor='middle'%3EAE%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .login-wrap{min-height:100vh;display:grid;place-items:center;background:linear-gradient(160deg,#07264D 0%,#0B3D80 55%,#0B63CE 130%);padding:2rem}
+  .login-card{width:min(420px,100%);background:#fff;border-radius:var(--r-lg);padding:2.5rem;box-shadow:var(--shadow-lg)}
+  .login-card .logo{justify-content:center;margin-bottom:1.5rem}
+  .login-card h1{font-size:1.5rem;text-align:center;margin-bottom:.4rem}
+  .login-card p.sub{text-align:center;margin-bottom:1.75rem}
+  .login-msg{display:none;color:#D33;font-size:.88rem;text-align:center;margin-bottom:1rem;background:rgba(211,51,51,.08);border:1px solid rgba(211,51,51,.25);border-radius:10px;padding:.7rem}
+  .login-msg.show{display:block}
+</style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <a class="logo" href="index.html" aria-label="AdsEasy Media home" style="display:flex"><span class="logo-mark">AE</span><span>Ads<b>Easy</b>&nbsp;Media</span></a>
+    <h1>Admin Login</h1>
+    <p class="sub">Restricted area. Authorized staff only.</p>
+    <div class="login-msg" id="login-msg" role="alert"></div>
+    <form id="login-form" novalidate>
+      <div class="field mt-2">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" autocomplete="username" required>
+      </div>
+      <div class="field mt-2">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button class="btn btn-primary mt-3" type="submit" style="width:100%">Log In</button>
+    </form>
+  </div>
+</div>
+<script>
+(function () {
+  var form = document.getElementById('login-form');
+  var msg = document.getElementById('login-msg');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    msg.classList.remove('show');
+    var submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    var original = submitBtn.textContent;
+    submitBtn.textContent = 'Logging in…';
+    try {
+      var res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value
+        })
+      });
+      if (res.ok) {
+        var params = new URLSearchParams(location.search);
+        location.href = params.get('next') || '/admin.html';
+        return;
+      }
+      var data = await res.json().catch(function () { return {}; });
+      msg.textContent = data.error || 'Login failed. Please try again.';
+      msg.classList.add('show');
+    } catch (err) {
+      msg.textContent = 'Network error. Please try again.';
+      msg.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+    }
+  });
+})();
+</script>
+</body>
+</html>

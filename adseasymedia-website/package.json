@@ -1,0 +1,13 @@
+{
+  "name": "adseasymedia-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AdsEasy Media static site + minimal Vercel serverless admin login.",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.9.6"
+  }
+}
