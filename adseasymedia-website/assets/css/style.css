@@ -197,6 +197,21 @@ li:hover>.mega,li:focus-within>.mega{opacity:1;visibility:visible;transform:tran
 @media(max-width:1000px){.steps,.steps.steps-6{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){.steps,.steps.steps-4,.steps.steps-6{grid-template-columns:1fr}}
 
+/* ---------- Process flow: hover-to-reveal icon nodes ---------- */
+.process-flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;gap:2.75rem 2rem;position:relative}
+.process-node{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;width:150px;cursor:pointer;outline:none}
+.process-node .n-badge{position:relative;width:76px;height:76px;border-radius:50%;background:var(--grad);color:#fff;display:grid;place-items:center;font-size:2rem;box-shadow:0 8px 20px rgba(11,99,206,.3);transition:transform .25s ease,box-shadow .25s ease;margin-bottom:.9rem}
+.process-node .n-index{position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;background:#fff;color:var(--blue);font-size:.7rem;font-family:var(--font-head);font-weight:800;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.18)}
+.process-node h4{font-size:.92rem;line-height:1.3}
+.process-node:hover .n-badge,.process-node:focus-within .n-badge,.process-node:focus .n-badge{transform:translateY(-6px) scale(1.07);box-shadow:0 16px 30px rgba(11,99,206,.42)}
+.process-tip{position:absolute;bottom:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);width:230px;background:#07264D;color:#fff;border-radius:var(--r-md);padding:1rem 1.15rem;box-shadow:var(--shadow-md);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:20;text-align:left}
+.process-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:#07264D}
+.process-node:hover .process-tip,.process-node:focus-within .process-tip,.process-node:focus .process-tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.process-tip ul{list-style:none;display:grid;gap:.35rem}
+.process-tip ul li{font-size:.8rem;color:rgba(255,255,255,.85);padding-left:1rem;position:relative}
+.process-tip ul li::before{content:"•";position:absolute;left:0;color:#4FE3E5}
+@media(max-width:760px){.process-flow{gap:2.25rem 1.25rem}.process-node{width:125px}.process-node h4{font-size:.82rem}.process-tip{width:190px;padding:.85rem .95rem}}
+
 /* ---------- Comparison ---------- */
 .compare{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .compare-col{border-radius:var(--r-lg);padding:2rem;border:1px solid var(--border);background:#fff}
@@ -263,6 +278,25 @@ li:hover>.mega,li:focus-within>.mega{opacity:1;visibility:visible;transform:tran
 .cs-metrics b{font-family:var(--font-head);font-size:1.25rem;color:var(--blue);display:block;line-height:1.2}
 .cs-metrics small{font-size:.72rem;color:var(--ink-mute);line-height:1.25;display:block;margin-top:.2rem}
 .cs-body p{font-size:.92rem}
+
+/* Collapsed narrative inside a case-study card: reuses .accordion/.acc-item JS,
+   restyled so it reads as an inline "read more" toggle, not a nested card. */
+.cs-accordion .acc-item{background:none;border:0;border-radius:0;border-top:1px solid var(--border);padding-top:.15rem}
+.cs-accordion .acc-item.active{box-shadow:none}
+.cs-accordion .acc-btn{padding:.9rem 0;font-family:var(--font-head);font-weight:600;font-size:.88rem;color:var(--blue)}
+.cs-accordion .acc-btn .plus{width:24px;height:24px;flex:0 0 24px;font-size:.95rem}
+.cs-accordion .acc-body p{padding:0 0 1rem}
+.cs-accordion .acc-body p:last-child{padding-bottom:0}
+
+/* ---------- Capability list: compact icon-row alternative to a card grid ---------- */
+.cap-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 3rem;margin-top:1rem}
+.cap-row{display:flex;gap:1.1rem;align-items:flex-start;padding:1.15rem 0;border-bottom:1px solid var(--border)}
+.cap-list>.cap-row:nth-last-child(1),.cap-list>.cap-row:nth-last-child(2):nth-child(odd){border-bottom:0}
+.cap-row .cap-icon{width:42px;height:42px;flex:0 0 42px;border-radius:11px;background:var(--grad-soft);border:1px solid rgba(11,99,206,.15);display:grid;place-items:center;font-size:1.1rem;transition:.25s}
+.cap-row:hover .cap-icon{background:var(--grad);transform:scale(1.06);box-shadow:0 6px 16px rgba(11,99,206,.3)}
+.cap-row h4{font-size:.96rem;margin-bottom:.25rem}
+.cap-row p{font-size:.85rem;color:var(--ink-mute);line-height:1.5;margin:0}
+@media(max-width:760px){.cap-list{grid-template-columns:1fr;gap:0}.cap-list>.cap-row:nth-last-child(2):nth-child(odd){border-bottom:1px solid var(--border)}.cap-list>.cap-row:last-child{border-bottom:0}}
 
 /* ---------- Blog ---------- */
 .blog-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:.3s;display:flex;flex-direction:column}
