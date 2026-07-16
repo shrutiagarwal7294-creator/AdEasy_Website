@@ -279,6 +279,15 @@ li:hover>.mega,li:focus-within>.mega{opacity:1;visibility:visible;transform:tran
 .cs-metrics small{font-size:.72rem;color:var(--ink-mute);line-height:1.25;display:block;margin-top:.2rem}
 .cs-body p{font-size:.92rem}
 
+/* Case-study carousel: reuses the .tslider engine (see main.js), max-width
+   applied to the wrapper (not the flex track) so slide math stays correct. */
+.cs-slider{max-width:860px;margin-inline:auto}
+.cs-slider .tslide{padding:.25rem}
+.cs-controls{display:flex;align-items:center;justify-content:center;gap:1.1rem;margin-top:1.5rem}
+.cs-controls .tnav{margin-top:0}
+.cs-arrow{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--blue);font-size:1.3rem;line-height:1;box-shadow:var(--shadow-sm);display:grid;place-items:center;transition:.25s}
+.cs-arrow:hover{background:var(--grad);color:#fff;border-color:transparent;transform:scale(1.08);box-shadow:0 8px 20px rgba(11,99,206,.32)}
+
 /* Collapsed narrative inside a case-study card: reuses .accordion/.acc-item JS,
    restyled so it reads as an inline "read more" toggle, not a nested card. */
 .cs-accordion .acc-item{background:none;border:0;border-radius:0;border-top:1px solid var(--border);padding-top:.15rem}

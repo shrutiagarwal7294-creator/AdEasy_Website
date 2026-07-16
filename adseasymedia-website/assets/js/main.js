@@ -82,11 +82,17 @@
     });
   });
 
-  /* Testimonial slider */
+  /* Generic slider engine — powers the testimonial slider and any other
+     .tslider (e.g. the SEO page case-study carousel). Autoplay is on by
+     default; add data-autoplay="false" on the .tslider element to make it
+     manual-only (dots + optional .cs-arrow prev/next buttons). */
   document.querySelectorAll('.tslider').forEach(function (slider) {
     var track = slider.querySelector('.tslider-track');
     var slides = track.children.length;
     var dotsBox = slider.parentElement.querySelector('.tnav');
+    var prevBtn = slider.parentElement.querySelector('.cs-arrow.prev');
+    var nextBtn = slider.parentElement.querySelector('.cs-arrow.next');
+    var autoplay = slider.getAttribute('data-autoplay') !== 'false';
     var i = 0, timer;
     function go(n) {
       i = (n + slides) % slides;
@@ -96,12 +102,17 @@
     if (dotsBox) {
       for (var k = 0; k < slides; k++) {
         var b = document.createElement('button');
-        b.setAttribute('aria-label', 'Testimonial ' + (k + 1));
+        b.setAttribute('aria-label', 'Slide ' + (k + 1));
         (function (k) { b.addEventListener('click', function () { go(k); restart(); }); })(k);
         dotsBox.appendChild(b);
       }
     }
-    function restart() { clearInterval(timer); timer = setInterval(function () { go(i + 1); }, 6000); }
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(i - 1); restart(); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(i + 1); restart(); });
+    function restart() {
+      clearInterval(timer);
+      if (autoplay) timer = setInterval(function () { go(i + 1); }, 6000);
+    }
     go(0); restart();
   });
 
