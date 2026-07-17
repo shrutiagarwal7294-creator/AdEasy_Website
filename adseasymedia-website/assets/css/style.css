@@ -100,6 +100,7 @@ p{color:var(--ink-soft)}
 /* Mega menu */
 .mega{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(8px);background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:1.5rem;opacity:0;visibility:hidden;transition:.25s;min-width:640px;display:grid;grid-template-columns:1fr 1fr;gap:.35rem 1.25rem}
 .mega.mega-sm{min-width:300px;grid-template-columns:1fr}
+@media(min-width:1024px) and (max-width:1240px){.mega{min-width:320px;grid-template-columns:1fr}}
 li:hover>.mega,li:focus-within>.mega{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .mega a{display:flex;gap:.7rem;align-items:flex-start;padding:.6rem .7rem;border-radius:12px;color:var(--ink);transition:.18s}
 .mega a:hover{background:var(--card)}
