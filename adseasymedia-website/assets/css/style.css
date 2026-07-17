@@ -83,7 +83,7 @@ p{color:var(--ink-soft)}
 .nav.scrolled{border-bottom-color:var(--border);box-shadow:var(--shadow-sm)}
 .nav-inner{width:min(1280px,94%);margin-inline:auto;height:100%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
 .logo{display:flex;align-items:center;gap:.6rem;font-family:var(--font-head);font-size:1.3rem;font-weight:800;color:var(--ink)!important;letter-spacing:-.02em}
-.logo-mark{width:38px;height:38px;border-radius:11px;background:var(--grad);display:grid;place-items:center;color:#fff;font-size:1.05rem;font-weight:800;box-shadow:0 6px 16px rgba(11,99,206,.35)}
+.logo-mark{height:36px;width:auto;display:block;object-fit:contain;flex-shrink:0}
 .logo span b{color:var(--blue)}
 .nav-links{display:flex;align-items:center;gap:.25rem;list-style:none}
 .nav-links>li{position:relative}
