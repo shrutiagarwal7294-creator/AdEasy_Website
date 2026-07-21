@@ -116,6 +116,46 @@
     go(0); restart();
   });
 
+  /* 3-visible case-study carousel (.cs3-slider) — shows 3 cards per frame
+     (2 on tablet, 1 on mobile) and steps one card at a time. Bounded, not
+     looping: arrows disable at the ends since this browses a short list. */
+  document.querySelectorAll('.cs3-slider').forEach(function (slider) {
+    var track = slider.querySelector('.cs3-track');
+    var cards = track.children;
+    var n = cards.length;
+    var dotsBox = slider.parentElement.querySelector('.tnav');
+    var prevBtn = slider.parentElement.querySelector('.cs-arrow.prev');
+    var nextBtn = slider.parentElement.querySelector('.cs-arrow.next');
+    var i = 0;
+
+    function visible() {
+      var w = slider.clientWidth;
+      return w < 640 ? 1 : (w < 980 ? 2 : 3);
+    }
+    function maxIndex() { return Math.max(0, n - visible()); }
+    function go(idx) {
+      i = Math.min(Math.max(idx, 0), maxIndex());
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      var step = cards[0].getBoundingClientRect().width + gap;
+      track.style.transform = 'translateX(-' + (i * step) + 'px)';
+      if (prevBtn) prevBtn.disabled = i <= 0;
+      if (nextBtn) nextBtn.disabled = i >= maxIndex();
+      if (dotsBox) [].forEach.call(dotsBox.children, function (d, k) { d.classList.toggle('active', k === i); });
+    }
+    if (dotsBox) {
+      for (var k = 0; k <= maxIndex(); k++) {
+        var b = document.createElement('button');
+        b.setAttribute('aria-label', 'Slide ' + (k + 1));
+        (function (k) { b.addEventListener('click', function () { go(k); }); })(k);
+        dotsBox.appendChild(b);
+      }
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(i - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(i + 1); });
+    window.addEventListener('resize', function () { go(Math.min(i, maxIndex())); });
+    go(0);
+  });
+
   /* Form validation + success animation */
   document.querySelectorAll('form[data-validate]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
